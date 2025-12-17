@@ -1,47 +1,5 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jurusan - POLNUSTAR</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header>
-    <div class="container nav">
-        <img src="logo-polnustar.png" class="logo">
-        <h1>POLNUSTAR</h1>
-    </div>
-    <nav>
-        <a href="index.html">Beranda</a>
-        <a href="jurusan.html">Jurusan</a>
-    </nav>
-</header>
-
-<section class="content">
-    <h2>Program Studi</h2>
-
-   <div class="jurusan">
-    <h3>💻 Teknologi Informatika</h3>
-    <p>Mempelajari pemrograman, sistem informasi, dan teknologi digital.</p>
-    <a href="ti-sistem-informasi.html" class="btn">Lihat Detail</a>
-</div>
-
-    <div class="jurusan">
-        <h3>🩺 Keperawatan</h3>
-        <p>Menghasilkan tenaga kesehatan profesional dan beretika.</p>
-    </div>
-
-    <div class="jurusan">
-        <h3>🐟 Perikanan</h3>
-        <p>Fokus pada budidaya, pengolahan, dan manajemen sumber daya perikanan.</p>
-    </div>
-</section>
-
-<footer>
-    <p>© 2025 Politeknik Negeri Nusa Utara</p>
-</footer>
-
-</body>
-</html>
+<h2>Jurusan</h2>
+{% for j in data %}
+<h3>{{ j.nama }}</h3>
+<p>{{ j.deskripsi }}</p>
+{% endfor %}

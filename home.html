@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Politeknik Negeri Nusa Utara</title>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f6fa;
+    margin-top: 70px; /* navbar fixed */
+}
+
+/* NAVBAR */
+.navbar {
+    background: #0d1b2a;
+}
+.navbar-brand img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+/* SLIDER */
+.carousel-item img {
+    height: 60vh;
+    object-fit: cover;
+}
+.carousel-caption {
+    background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* CARD BERITA */
+.news-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.news-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+.news-card img {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+.news-card img:hover {
+    transform: scale(1.05);
+}
+
+/* JURUSAN/PRODI */
+.jurusan-card {
+    border-radius: 15px;
+    background: #fff;
+    text-align: center;
+    padding: 30px 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.jurusan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+.jurusan-card img {
+    height: 80px;
+    margin-bottom: 15px;
+}
+
+/* FASILITAS */
+.fasilitas-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+.fasilitas-card:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+.fasilitas-card img {
+    height: 180px;
+    object-fit: cover;
+}
+
+/* FOOTER */
+footer {
+    background: #0d1b2a;
+    color: #ccc;
+    padding: 40px 0;
+}
+footer a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 10px;
+}
+footer a:hover {
+    color: #fff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .carousel-caption h3 {
+        font-size: 1.2rem;
+    }
+    .news-card img, .fasilitas-card img {
+        height: 150px;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="{{ url_for('static', filename='uploads/Logo Polnustar.png') }}" alt="">
+            POLNUSTAR
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Admin</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- SLIDER BERITA -->
+<div id="sliderBerita" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for b in berita %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <img src="{{ url_for('static', filename='uploads/' + b.foto) }}" class="d-block w-100">
+            <div class="carousel-caption text-start">
+                <h3>{{ b.judul }}</h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#sliderBerita" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#sliderBerita" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<!-- BERITA TERBARU -->
+<div class="container mt-5">
+    <h3 class="mb-4 fw-bold text-center">Berita Terbaru</h3>
+    <div class="row g-4">
+        {% for b in berita %}
+        <div class="col-md-4 col-sm-6">
+            <div class="news-card bg-white">
+                <img src="{{ url_for('static', filename='uploads/' + b.foto) }}" class="w-100">
+                <div class="p-3">
+                    <h6 class="fw-bold">{{ b.judul }}</h6>
+                    <p class="text-muted small">{{ b.isi[:120] }}...</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- JURUSAN / PRODI -->
+<div class="container mt-5">
+    <h3 class="mb-4 fw-bold text-center">Jurusan & Prodi</h3>
+    <div class="row g-4">
+        <!-- Contoh card jurusan, ganti sesuai data -->
+        <div class="col-md-3 col-sm-6">
+            <div class="jurusan-card">
+                <img src="{{ url_for('static', filename='uploads/logo_ti.png') }}" alt="TI">
+                <h6>Teknologi Informasi</h6>
+                <p>Prodi Sistem Informasi</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="jurusan-card">
+                <img src="{{ url_for('static', filename='uploads/logo_keperawatan.png') }}" alt="Keperawatan">
+                <h6>Keperawatan</h6>
+                <p>Prodi Keperawatan</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="jurusan-card">
+                <img src="{{ url_for('static', filename='uploads/logo_perikanan.png') }}" alt="Perikanan">
+                <h6>Perikanan</h6>
+                <p>Prodi Budidaya Perikanan</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="jurusan-card">
+                <img src="{{ url_for('static', filename='uploads/logo_lain.png') }}" alt="Lainnya">
+                <h6>Jurusan Lain</h6>
+                <p>Prodi Pendukung</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FASILITAS -->
+<div class="container mt-5">
+    <h3 class="mb-4 fw-bold text-center">Fasilitas Kampus</h3>
+    <div class="row g-4">
+        <!-- Contoh fasilitas -->
+        <div class="col-md-4 col-sm-6">
+            <div class="fasilitas-card">
+                <img src="{{ url_for('static', filename='uploads/lab_komputer.jpg') }}" class="w-100" alt="Lab Komputer">
+                <div class="p-3">
+                    <h6 class="fw-bold">Laboratorium Komputer</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="fasilitas-card">
+                <img src="{{ url_for('static', filename='uploads/perpustakaan.jpg') }}" class="w-100" alt="Perpustakaan">
+                <div class="p-3">
+                    <h6 class="fw-bold">Perpustakaan</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="fasilitas-card">
+                <img src="{{ url_for('static', filename='uploads/lab_praktikum.jpg') }}" class="w-100" alt="Lab Praktikum">
+                <div class="p-3">
+                    <h6 class="fw-bold">Laboratorium Praktikum</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="mt-5 text-center">
+    <h6 class="fw-bold mb-3">Politeknik Negeri Nusa Utara</h6>
+    <p>Sistem Informasi Kampus</p>
+    <div class="mb-2">
+        <a href="#"><i class="bi bi-facebook"></i> Facebook</a>
+        <a href="#"><i class="bi bi-twitter"></i> Twitter</a>
+        <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
+    </div>
+    <small>&copy; 2025 POLINUSA</small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
